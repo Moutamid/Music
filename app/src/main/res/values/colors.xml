@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="color">#494949</color>
+    <color name="colorAccent">#494949</color>
+    <color name="seekbar_background_color">#494949</color> <!-- Light gray -->
+    <color name="seekbar_progress_color">#00FF00</color> <!-- Green -->
+    <color name="seekbar_thumb_color">#152685</color> <!-- Red -->
+
+</resources>

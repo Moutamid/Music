@@ -1,0 +1,21 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background -->
+    <item android:id="@android:id/background">
+        <shape android:shape="rectangle">
+            <size android:height="5dp" /> <!-- Set the desired height here -->
+            <solid android:color="@color/seekbar_background_color" /> <!-- Set the background color -->
+            <corners android:radius="6dp" />
+        </shape>
+    </item>
+
+    <!-- Progress -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <size android:height="5dp" /> <!-- Set the desired height here -->
+                <solid android:color="@color/seekbar_progress_color" /> <!-- Set the progress color -->
+                <corners android:radius="6dp" />
+            </shape>
+        </clip>
+    </item>
+</layer-list>

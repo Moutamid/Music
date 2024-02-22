@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MusicApp</string>
+    <string name="Facebook_Interstitial_placement">"2722927698006061_2722934531338711 "</string>
+    <string name="admob_app_id">
+ca-app-pub-3940256099942544~3347511713</string>
+    <string name="admob_banner_id">
+ca-app-pub-3940256099942544/6300978111</string>
+</resources>

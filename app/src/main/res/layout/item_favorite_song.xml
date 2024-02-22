@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="3dp"
+    android:background="@drawable/btn_bg"
+    android:backgroundTint="#494949"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/song_image_view"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/note1_c"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/song_fav_view"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/fav"
+ /> <!-- Default image for songs -->
+    <ImageView
+        android:id="@+id/play"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="10dp"
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/music_lay"
+        android:tint="#E8E5E5" /> <!-- Default image for songs -->
+
+    <TextView
+        android:id="@+id/song_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_toEndOf="@+id/song_image_view"
+        android:fontFamily="@font/lato_bold"
+        android:text="Song Name"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/song_details_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/song_name_text_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="50dp"
+        android:layout_toEndOf="@+id/song_image_view"
+        android:fontFamily="@font/lato_regular"
+        android:maxLines="1"
+        android:text="Song name"
+        android:singleLine="true"
+        android:ellipsize="marquee"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+        android:textColor="#DDD8D8"
+        android:textSize="11sp" />
+
+</RelativeLayout>
