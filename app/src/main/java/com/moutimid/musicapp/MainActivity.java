@@ -43,34 +43,29 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private List<Song> songList;
     SongAdapter adapter;
-//    private AdView adView;
 private boolean adLoaded=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         songList = new ArrayList<>();
 
-
-
         MobileAds.initialize(this);
-
-
-
-
         AdView mAdView;
         mAdView = findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+
+        // Facebook banner ad
         final RelativeLayout adContainer = findViewById(R.id.banner_container);
-        com.facebook.ads.AdView adView = new com.facebook.ads.AdView(this, "2722927698006061_2722935724671925", AdSize.BANNER_HEIGHT_50);
+        com.facebook.ads.AdView adView = new com.facebook.ads.AdView(this, getString(R.string.facebook_banner_ad), AdSize.BANNER_HEIGHT_50);
         adContainer.addView(adView);
         AdSettings.turnOnSDKDebugger(getApplicationContext());
         AdSettings.setTestMode(true);
         adView.loadAd();
+        // End
 
 
         // Add songs to songList

@@ -1,7 +1,6 @@
 package com.moutimid.musicapp.Adapter;
 
 
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,18 +20,14 @@ import com.google.android.ads.nativetemplates.NativeTemplateStyle;
 import com.google.android.ads.nativetemplates.TemplateView;
 import com.google.android.gms.ads.AdLoader;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.formats.UnifiedNativeAd;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.moutimid.musicapp.Model.DatabaseHelper;
 import com.moutimid.musicapp.Model.Song;
 import com.moutimid.musicapp.MusicPlayerActivity;
-
 
 import java.io.Serializable;
 import java.util.List;
@@ -76,20 +71,15 @@ import java.util.List;
                 ((ViewHolder) holder).songNameTextView.setText(song.getName());
                 ((ViewHolder) holder).song_details_text_view.setText(song.getDescription());
                 AdRequest adRequest = new AdRequest.Builder().build();
-                InterstitialAd.load(context, "ca-app-pub-3940256099942544/1033173712", adRequest,
+                InterstitialAd.load(context, context.getString(R.string.admob_interstitial_ad), adRequest,
                         new InterstitialAdLoadCallback() {
                             @Override
                             public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                // The mInterstitialAd reference will be null until
-                                // an ad is loaded.
                                 mInterstitialAd = interstitialAd;
-                                Log.i("TAG", "onAdLoaded");
                             }
 
                             @Override
                             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                // Handle the error
-                                Log.d("TAG", loadAdError.toString());
                                 mInterstitialAd = null;
                             }
                         });
@@ -124,101 +114,35 @@ import java.util.List;
                     }
                 });
                 holder.itemView.setOnClickListener(view -> {
+                    Intent intent = new Intent(context, MusicPlayerActivity.class);
+                    intent.putExtra("position", position);
+                    intent.putExtra("songList", (Serializable) songList);
+                    context.startActivity(intent);
+
+                    //Show interstitial Ads
                     if (mInterstitialAd != null) {
                         mInterstitialAd.show(activity);
                     } else {
                         Log.d("TAG", "The interstitial ad wasn't ready yet.");
                     }
-                    Intent intent = new Intent(context, MusicPlayerActivity.class);
-                    intent.putExtra("position", position);
-                    intent.putExtra("songList", (Serializable) songList);
-                    context.startActivity(intent);
                 });
-
             }
             else {
                 MobileAds.initialize(context);
-                AdLoader adLoader = new AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
+                AdLoader adLoader = new AdLoader.Builder(context, context.getString(R.string.native_ads_id))
                         .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
                             @Override
                             public void onNativeAdLoaded(NativeAd nativeAd) {
                                 NativeTemplateStyle styles = new
                                         NativeTemplateStyle.Builder().withMainBackgroundColor(convertColorToDrawable(R.color.white)).build();
-
                                 ((adViewHolder) holder).Adtemplate.setStyles(styles);
                                 ((adViewHolder) holder).Adtemplate.setNativeAd(nativeAd);
                             }
                         })
                         .build();
                 adLoader.loadAd(new AdRequest.Builder().build());
-
             }
         }
-
-//        @Override
-//    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        Song song = songList.get(position);
-//        holder.songNameTextView.setText(song.getName());
-//        holder.song_details_text_view.setText(song.getDescription());
-//        AdRequest adRequest = new AdRequest.Builder().build();
-//        InterstitialAd.load(context, "ca-app-pub-3940256099942544/1033173712", adRequest,
-//                new InterstitialAdLoadCallback() {
-//                    @Override
-//                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-//                        // The mInterstitialAd reference will be null until
-//                        // an ad is loaded.
-//                        mInterstitialAd = interstitialAd;
-//                        Log.i("TAG", "onAdLoaded");
-//                    }
-//
-//                    @Override
-//                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-//                        // Handle the error
-//                        Log.d("TAG", loadAdError.toString());
-//                        mInterstitialAd = null;
-//                    }
-//                });
-//        DatabaseHelper databaseHelper = new DatabaseHelper(context);
-//        boolean songFavorite = databaseHelper.isSongFavorite(song.getName());
-//        Log.d("data", songFavorite + "  " + song.getName());
-//        if (songFavorite) {
-//            holder.song_fav_view.setVisibility(View.VISIBLE);
-//            holder.song_unfav_view.setVisibility(View.GONE);
-//        } else {
-//            holder.song_fav_view.setVisibility(View.GONE);
-//            holder.song_unfav_view.setVisibility(View.VISIBLE);
-//        }
-//        holder.song_fav_view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                 DatabaseHelper databaseHelper = new DatabaseHelper(context);
-//                databaseHelper.deleteSongFromFavorites(song.getName());
-//                holder.song_fav_view.setVisibility(View.GONE);
-//                holder.song_unfav_view.setVisibility(View.VISIBLE);
-//            }
-//        });
-//        holder.song_unfav_view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (mInterstitialAd != null) {
-//                    mInterstitialAd.show(activity);
-//                } else {
-//                    Log.d("TAG", "The interstitial ad wasn't ready yet.");
-//                }
-//                DatabaseHelper databaseHelper = new DatabaseHelper(context);
-//                databaseHelper.addSongToFavorites(song);
-//
-//                holder.song_fav_view.setVisibility(View.VISIBLE);
-//                holder.song_unfav_view.setVisibility(View.GONE);
-//            }
-//        });
-//        holder.itemView.setOnClickListener(view -> {
-//            Intent intent = new Intent(context, MusicPlayerActivity.class);
-//            intent.putExtra("position", position);
-//            intent.putExtra("songList", (Serializable) songList);
-//            context.startActivity(intent);
-//        });
-//    }
 
     @Override
     public int getItemCount() {

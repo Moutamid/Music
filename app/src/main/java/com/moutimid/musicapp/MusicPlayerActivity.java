@@ -74,7 +74,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
 
         databaseHelper = new DatabaseHelper(MusicPlayerActivity.this);
         final RelativeLayout adContainer = findViewById(R.id.banner_container);
-        AdView adView = new AdView(this, "2722927698006061_2722935724671925", AdSize.BANNER_HEIGHT_50);
+        AdView adView = new AdView(this, getString(R.string.facebook_banner_ad), AdSize.BANNER_HEIGHT_50);
         adContainer.addView(adView);
         AdSettings.turnOnSDKDebugger(getApplicationContext());
         AdSettings.setTestMode(true);
@@ -211,18 +211,12 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     private void initMediaPlayer() {
         mediaPlayer = new MediaPlayer();
         mediaPlayer.setOnCompletionListener(this);
-//        songList = new ArrayList<>();
-//        songList.add(new Song("David Bowie", "The Rise and Fall of Ziggy Stardust", R.drawable.pic1, R.raw.song1));
-//        songList.add(new Song("Nine Inch Nails", "Pretty Hate Machine", R.drawable.pic2, R.raw.song2));
-//        songList.add(new Song("Tori Amos", "Little Earthquakes", R.drawable.pic3, R.raw.song3));
-//        songList.add(new Song("Enigma", "Never mind", R.drawable.pic4, R.raw.song4));
-//        songList.add(new Song("Madonna", "The Cross of Changes", R.drawable.pic5, R.raw.song5));
-//        songList.add(new Song("Janet Jackson", "The Immaculate Collection", R.drawable.pic6, R.raw.song6));
-//        songList.add(new Song("Reflections of Hope", "The Velvet Rope", R.drawable.pic7, R.raw.song7));  // Add more songs as needed
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra("songList")) {
-            songList = (ArrayList<Song>) intent.getSerializableExtra("songList");
-        }currentPosition = getIntent().getIntExtra("position", 0);
+        if (intent != null && intent.hasExtra("songList"))
+        {
+        songList = (ArrayList<Song>) intent.getSerializableExtra("songList");
+        }
+        currentPosition = getIntent().getIntExtra("position", 0);
         try {
             mediaPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/" + songList.get(currentPosition).getMusicResourceId()));
             mediaPlayer.prepare();
@@ -234,7 +228,6 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
 
         song_name.setText(songList.get(currentPosition).getName());
         artist_name.setText(songList.get(currentPosition).getDescription());
-//        song_image_view.setImageResource(songList.get(currentPosition).getImageResourceId());
         playButton.setImageResource(R.drawable.ic_baseline_pause);
 
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));

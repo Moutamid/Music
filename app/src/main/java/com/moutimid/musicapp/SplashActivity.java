@@ -32,23 +32,29 @@ public class SplashActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
         final RelativeLayout adContainer = findViewById(R.id.banner_container);
-        AdView adView = new AdView(this, "2722927698006061_2722935724671925", AdSize.BANNER_HEIGHT_50);
+        RelativeLayout imageView = findViewById(R.id.imageView);
+        float startY = imageView.getY();
+        float endY = startY + getResources().getDimensionPixelSize(R.dimen.move_distance);
+        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", startY, endY);
+        animator.setDuration(1000);
+        animator.start();
+
+        // Banner Ads Code
+        AdView adView = new AdView(this, getString(R.string.facebook_banner_ad), AdSize.BANNER_HEIGHT_50);
         adContainer.addView(adView);
         AdSettings.turnOnSDKDebugger(getApplicationContext());
         AdSettings.setTestMode(true);
         adView.loadAd();
+        // Complete
 
+        // Interstitial Ads Code
         AdRequest adRequest = new AdRequest.Builder().build();
-        InterstitialAd.load(getApplicationContext(), "ca-app-pub-3940256099942544/1033173712", adRequest,
+        InterstitialAd.load(getApplicationContext(), getString(R.string.admob_interstitial_ad), adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        // The mInterstitialAd reference will be null until
-                        // an ad is loaded.
                         mInterstitialAd = interstitialAd;
-                        Log.i("TAG", "onAdLoaded");
                     }
-
                     @Override
                     public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                         // Handle the error
@@ -56,28 +62,17 @@ public class SplashActivity extends AppCompatActivity {
                         mInterstitialAd = null;
                     }
                 });
-        RelativeLayout imageView = findViewById(R.id.imageView);
+        // Complete
 
-        // Get the current Y position of the imageView
-        float startY = imageView.getY();
-
-        // Calculate the end Y position which is 100dp down from the top
-        float endY = startY + getResources().getDimensionPixelSize(R.dimen.move_distance);
-
-        // Create an ObjectAnimator to animate the translationY property
-        ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", startY, endY);
-        animator.setDuration(1000); // Set the duration of the animation in milliseconds (e.g., 1000ms = 1 second)
-        animator.start(); // Start the animation
     }
 
     public void start(View view) {
+         startActivity(new Intent(this, MainActivity.class));
         mInterstitialAd.show(SplashActivity.this);
-        startActivity(new Intent(this, MainActivity.class));
     }
 
     public void fav(View view) {
         startActivity(new Intent(this, FavouriteScreen.class));
-//        startActivity(new Intent(this, Ad_Banner.class));
     }
 
     public void our_application(View view) {
