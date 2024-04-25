@@ -134,6 +134,7 @@ import java.util.List;
                             @Override
                             public void onNativeAdLoaded(NativeAd nativeAd) {
                                 NativeTemplateStyle styles = new
+
                                         NativeTemplateStyle.Builder().withMainBackgroundColor(convertColorToDrawable(R.color.white)).build();
                                 ((adViewHolder) holder).Adtemplate.setStyles(styles);
                                 ((adViewHolder) holder).Adtemplate.setNativeAd(nativeAd);
