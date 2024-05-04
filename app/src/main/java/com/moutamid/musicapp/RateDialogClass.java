@@ -1,4 +1,4 @@
-package com.moutimid.musicapp;
+package com.moutamid.musicapp;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.musicnewapp.R;
 
 
 public class RateDialogClass extends Dialog implements

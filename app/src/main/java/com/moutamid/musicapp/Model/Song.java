@@ -1,4 +1,4 @@
-package com.moutimid.musicapp.Model;
+package com.moutamid.musicapp.Model;
 
 import java.io.Serializable;
 
@@ -6,8 +6,6 @@ public class Song implements Serializable {
     private String name;
     private String description;
     private int musicResourceId;
-
-    String artist;
 
     public Song() {
     }
@@ -34,13 +32,6 @@ public class Song implements Serializable {
         return musicResourceId;
     }
 
-    public String getArtist() {
-        return artist;
-    }
-
-    public void setArtist(String artist) {
-        this.artist = artist;
-    }
 
     public void setName(String name) {
         this.name = name;

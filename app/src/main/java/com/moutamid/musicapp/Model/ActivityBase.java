@@ -1,4 +1,4 @@
-package com.moutimid.musicapp.Model;
+package com.moutamid.musicapp.Model;
 
 import android.app.Application;
 

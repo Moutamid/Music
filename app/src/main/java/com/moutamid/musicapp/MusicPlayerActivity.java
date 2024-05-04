@@ -1,4 +1,4 @@
-package com.moutimid.musicapp;
+package com.moutamid.musicapp;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -8,14 +8,12 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.musicnewapp.R;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.AdSettings;
@@ -25,9 +23,10 @@ import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
-import com.moutimid.musicapp.Model.DatabaseHelper;
-import com.moutimid.musicapp.Model.RepeatMode;
-import com.moutimid.musicapp.Model.Song;
+import com.moutamid.musicapp.Model.DatabaseHelper;
+import com.moutamid.musicapp.Model.RepeatMode;
+import com.moutamid.musicapp.Model.Song;
+import com.moutamid.musicapp.Model.SongsModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,8 +41,8 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     ImageView song_image_view;
     private ImageView playButton, nextButton, prevButton, shuffleButton, repeatButton, favButton;
     private MediaPlayer mediaPlayer;
-    private List<Song> songList;
-    private List<Song> originalSongList;
+    private List<SongsModel> songList;
+    private List<SongsModel> originalSongList;
     private int currentPosition = 0;
     private boolean isPlaying = false;
     private boolean isShuffleOn = false;
@@ -59,13 +58,9 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_player);
-
         initViews();
         initMediaPlayer();
         MobileAds.initialize(this);
-
-
-
 
         com.google.android.gms.ads.AdView mAdView;
         mAdView = findViewById(R.id.adView);
@@ -83,13 +78,14 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFBInterstitial();
-
                 if (isPlaying) {
                     pauseMusic();
                 } else {
                     playMusic();
                 }
+                showFBInterstitial();
+
+
             }
         });
         loadFbInterstitialAd();
@@ -188,7 +184,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     }
 
     private void removeToFavorites() {
-        Song currentSong = songList.get(currentPosition);
+        SongsModel currentSong = songList.get(currentPosition);
         databaseHelper.deleteSongFromFavorites(currentSong.getName());
     }
 
@@ -214,11 +210,11 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("songList"))
         {
-        songList = (ArrayList<Song>) intent.getSerializableExtra("songList");
+        songList = (ArrayList<SongsModel>) intent.getSerializableExtra("songList");
         }
         currentPosition = getIntent().getIntExtra("position", 0);
         try {
-            mediaPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/" + songList.get(currentPosition).getMusicResourceId()));
+            mediaPlayer.setDataSource(songList.get(currentPosition).getUrl());
             mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
@@ -227,7 +223,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
 
         song_name.setText(songList.get(currentPosition).getName());
-        artist_name.setText(songList.get(currentPosition).getDescription());
+        artist_name.setText(songList.get(currentPosition).getDetails());
         playButton.setImageResource(R.drawable.ic_baseline_pause);
 
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
@@ -271,7 +267,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         }
 
         song_name.setText(songList.get(currentPosition).getName());
-        artist_name.setText(songList.get(currentPosition).getDescription());
+        artist_name.setText(songList.get(currentPosition).getDetails());
 //        song_image_view.setImageResource(songList.get(currentPosition).getImageResourceId());
         playButton.setImageResource(R.drawable.ic_baseline_pause);
 
@@ -293,7 +289,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         }
 
         song_name.setText(songList.get(currentPosition).getName());
-        artist_name.setText(songList.get(currentPosition).getDescription());
+        artist_name.setText(songList.get(currentPosition).getDetails());
 //        song_image_view.setImageResource(songList.get(currentPosition).getImageResourceId());
         playButton.setImageResource(R.drawable.ic_baseline_pause);
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
@@ -303,16 +299,16 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     private void playNextOrPreviousSong() {
         mediaPlayer.reset();
         try {
-            mediaPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/" + songList.get(currentPosition).getMusicResourceId()));
+            mediaPlayer.setDataSource(songList.get(currentPosition).getUrl());
             mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
         mediaPlayer.start();
 
-        Song currentSong = songList.get(currentPosition);
+        SongsModel currentSong = songList.get(currentPosition);
         song_name.setText(currentSong.getName());
-        artist_name.setText(currentSong.getDescription());
+        artist_name.setText(currentSong.getDetails());
 //        song_image_view.setImageResource(currentSong.getImageResourceId());
 
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
@@ -344,7 +340,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     }
 
     private void addToFavorites() {
-        Song currentSong = songList.get(currentPosition);
+        SongsModel currentSong = songList.get(currentPosition);
         databaseHelper.addSongToFavorites(currentSong);
     }
 

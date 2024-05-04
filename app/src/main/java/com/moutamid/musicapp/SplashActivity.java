@@ -1,4 +1,4 @@
-package com.moutimid.musicapp;
+package com.moutamid.musicapp;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -13,7 +13,6 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.musicnewapp.R;
 import com.facebook.ads.AdSettings;
 import com.facebook.ads.AdSize;
 import com.facebook.ads.AdView;
@@ -68,7 +67,7 @@ public class SplashActivity extends AppCompatActivity {
 
     public void start(View view) {
          startActivity(new Intent(this, MainActivity.class));
-        mInterstitialAd.show(SplashActivity.this);
+//        mInterstitialAd.show(SplashActivity.this);
     }
 
     public void fav(View view) {

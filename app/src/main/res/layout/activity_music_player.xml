@@ -29,8 +29,15 @@
 
     <!-- Default image for songs -->
 
+    <RelativeLayout
+        android:id="@+id/banner_container"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="vertical"
+        android:layout_marginTop="40dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
-<View
+<RelativeLayout
         android:id="@+id/song_image_view1"
 
         android:layout_width="match_parent"
@@ -40,26 +47,38 @@
         android:layout_marginTop="90dp"
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="50dp"
-        android:background="@drawable/round_gb" />
+        android:background="@drawable/round_gb" >
+
     <RelativeLayout
-        android:id="@+id/banner_container"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="vertical"
-        android:layout_marginTop="40dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:id="@+id/imageView"
+        android:layout_height="wrap_content"
+android:layout_centerInParent="true"
+       android:layout_width="wrap_content">
 
-    <ImageView
-        android:id="@+id/song_image_view"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="50dp"
-        android:src="@drawable/logo" />
+        <View
+            android:layout_width="190dp"
 
+            android:layout_height="190dp"
+            android:background="@drawable/shape"
+            android:backgroundTint="@color/white" />
+
+        <View
+            android:layout_width="190dp"
+            android:layout_height="190dp"
+            android:background="@drawable/shape"
+            android:backgroundTint="@color/white"
+            android:rotation="90" />
+
+        <ImageView
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_centerInParent="true"
+            android:backgroundTint="@color/white"
+            android:src="@drawable/logo"
+            app:tint="@color/black" />
+
+    </RelativeLayout>
+</RelativeLayout>
     <TextView
         android:id="@+id/song_name_text_view"
         android:layout_width="wrap_content"

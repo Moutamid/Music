@@ -1,4 +1,4 @@
-package com.moutimid.musicapp.Adapter;
+package com.moutamid.musicapp.Adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,32 +11,33 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.musicnewapp.R;
 import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
-import com.moutimid.musicapp.Model.DatabaseHelper;
-import com.moutimid.musicapp.Model.Song;
-import com.moutimid.musicapp.MusicPlayerActivity;
+import com.moutamid.musicapp.Model.DatabaseHelper;
+import com.moutamid.musicapp.Model.Song;
+import com.moutamid.musicapp.Model.SongsModel;
+import com.moutamid.musicapp.MusicPlayerActivity;
+import com.moutamid.musicapp.R;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class FavoriteSongsAdapter extends RecyclerView.Adapter<FavoriteSongsAdapter.FavoriteSongViewHolder> {
 
-    private List<Song> favoriteSongs;
+    private List<SongsModel> favoriteSongs;
     Context context;
     InterstitialAd interstitialAdFB;
     boolean fb1 = false;
 
-    public FavoriteSongsAdapter(List<Song> favoriteSongs, Context context) {
+    public FavoriteSongsAdapter(List<SongsModel> favoriteSongs, Context context) {
         this.favoriteSongs = favoriteSongs;
         this.context = context;
     }
 
 
-    public FavoriteSongsAdapter(List<Song> favoriteSongs) {
+    public FavoriteSongsAdapter(List<SongsModel> favoriteSongs) {
         this.favoriteSongs = favoriteSongs;
     }
 
@@ -49,10 +50,9 @@ public class FavoriteSongsAdapter extends RecyclerView.Adapter<FavoriteSongsAdap
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteSongViewHolder holder, int position) {
-        Song song = favoriteSongs.get(position);
+        SongsModel song = favoriteSongs.get(position);
         holder.bind(song);
         loadFbInterstitialAd();
-
         holder.song_fav_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,9 +90,9 @@ public class FavoriteSongsAdapter extends RecyclerView.Adapter<FavoriteSongsAdap
             song_fav_view = itemView.findViewById(R.id.song_fav_view);
         }
 
-        public void bind(Song song) {
+        public void bind(SongsModel song) {
             nameTextView.setText(song.getName());
-            artistTextView.setText(song.getArtist());
+            artistTextView.setText(song.getDetails());
         }
     }
 

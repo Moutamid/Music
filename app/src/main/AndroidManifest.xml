@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.moutimid.musicapp.Model.ActivityBase"
+        android:name="com.moutamid.musicapp.Model.ActivityBase"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -21,18 +21,18 @@
 
 
         <activity
-            android:name="com.moutimid.musicapp.FavouriteScreen"
+            android:name="com.moutamid.musicapp.FavouriteScreen"
             android:exported="false" />
         <activity
-            android:name="com.moutimid.musicapp.Ad_Banner"
-            android:exported="false" />
-
-        <activity
-            android:name="com.moutimid.musicapp.MusicPlayerActivity"
+            android:name="com.moutamid.musicapp.Ad_Banner"
             android:exported="false" />
 
         <activity
-            android:name="com.moutimid.musicapp.SplashActivity"
+            android:name="com.moutamid.musicapp.MusicPlayerActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.moutamid.musicapp.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.moutimid.musicapp.MainActivity"
+            android:name="com.moutamid.musicapp.MainActivity"
             android:exported="true" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
