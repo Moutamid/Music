@@ -41,11 +41,10 @@
             android:rotation="90" />
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:layout_centerInParent="true"
             android:backgroundTint="@color/white"
-            android:paddingEnd="5dp"
             android:scaleType="centerCrop"
             android:src="@drawable/logo"
             app:tint="@color/black" />
