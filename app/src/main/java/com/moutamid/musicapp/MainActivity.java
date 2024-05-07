@@ -27,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.moutamid.musicapp.Adapter.SongAdapter;
+import com.moutamid.musicapp.Model.Config;
 import com.moutamid.musicapp.Model.Song;
 import com.moutamid.musicapp.Model.SongsModel;
 
@@ -63,7 +64,7 @@ private boolean adLoaded=false;
 
         // Facebook banner ad
         final RelativeLayout adContainer = findViewById(R.id.banner_container);
-        com.facebook.ads.AdView adView = new com.facebook.ads.AdView(this, getString(R.string.facebook_banner_ad), AdSize.BANNER_HEIGHT_50);
+        com.facebook.ads.AdView adView = new com.facebook.ads.AdView(this, Config.facebook_banner_ad, AdSize.BANNER_HEIGHT_50);
         adContainer.addView(adView);
         AdSettings.turnOnSDKDebugger(getApplicationContext());
         AdSettings.setTestMode(true);

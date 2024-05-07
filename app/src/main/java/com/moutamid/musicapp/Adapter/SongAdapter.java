@@ -23,6 +23,7 @@ import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.NativeAd;
+import com.moutamid.musicapp.Model.Config;
 import com.moutamid.musicapp.Model.DatabaseHelper;
 import com.moutamid.musicapp.Model.SongsModel;
 import com.moutamid.musicapp.MusicPlayerActivity;
@@ -67,7 +68,7 @@ import java.util.List;
                 ((ViewHolder) holder).songNameTextView.setText(song.getName());
                 ((ViewHolder) holder).song_details_text_view.setText(song.getDetails());
                 AdRequest adRequest = new AdRequest.Builder().build();
-                InterstitialAd.load(context, context.getString(R.string.admob_interstitial_ad), adRequest,
+                InterstitialAd.load(context, Config.admob_interstitial_ad, adRequest,
                         new InterstitialAdLoadCallback() {
                             @Override
                             public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -224,7 +225,7 @@ import java.util.List;
                     }
                 });
                 MobileAds.initialize(context);
-                AdLoader adLoader = new AdLoader.Builder(context, context.getString(R.string.native_ads_id))
+                AdLoader adLoader = new AdLoader.Builder(context, Config.native_ads_id)
                         .forNativeAd(new NativeAd.OnNativeAdLoadedListener() {
                             @Override
                             public void onNativeAdLoaded(NativeAd nativeAd) {

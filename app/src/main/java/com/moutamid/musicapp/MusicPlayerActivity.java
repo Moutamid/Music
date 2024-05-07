@@ -23,6 +23,7 @@ import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.moutamid.musicapp.Model.Config;
 import com.moutamid.musicapp.Model.DatabaseHelper;
 import com.moutamid.musicapp.Model.RepeatMode;
 import com.moutamid.musicapp.Model.Song;
@@ -69,7 +70,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
 
         databaseHelper = new DatabaseHelper(MusicPlayerActivity.this);
         final RelativeLayout adContainer = findViewById(R.id.banner_container);
-        AdView adView = new AdView(this, getString(R.string.facebook_banner_ad), AdSize.BANNER_HEIGHT_50);
+        AdView adView = new AdView(this, Config.facebook_banner_ad, AdSize.BANNER_HEIGHT_50);
         adContainer.addView(adView);
         AdSettings.turnOnSDKDebugger(getApplicationContext());
         AdSettings.setTestMode(true);
@@ -400,7 +401,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     }
 
     private void loadFbInterstitialAd() {
-        interstitialAdFB = new InterstitialAd(getApplicationContext(), "IMG_16_9_APP_INSTALL#2722927698006061_2722934531338711");
+        interstitialAdFB = new InterstitialAd(getApplicationContext(), "IMG_16_9_APP_INSTALL#"+Config.facebook_interstitial_ad);
         InterstitialAdListener interstitialAdListener = new InterstitialAdListener() {
             private Ad ad;
             private AdError adError;

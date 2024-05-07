@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +21,16 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.moutamid.musicapp.Model.Config;
 
 public class SplashActivity extends AppCompatActivity {
     InterstitialAd mInterstitialAd;
+    DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,43 +38,50 @@ public class SplashActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);
-        final RelativeLayout adContainer = findViewById(R.id.banner_container);
         RelativeLayout imageView = findViewById(R.id.imageView);
         float startY = imageView.getY();
         float endY = startY + getResources().getDimensionPixelSize(R.dimen.move_distance);
         ObjectAnimator animator = ObjectAnimator.ofFloat(imageView, "translationY", startY, endY);
         animator.setDuration(1000);
         animator.start();
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("MusicApp").child("Ads");
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild("facebook_interstitial_ad")) {
+                    Config.facebook_interstitial_ad = snapshot.child("facebook_interstitial_ad").getValue().toString();
+                }
+                if (snapshot.hasChild("facebook_banner_ad")) {
+                    Config.facebook_banner_ad = snapshot.child("facebook_banner_ad").getValue().toString();
+                }
+                if (snapshot.hasChild("admob_app_id")) {
+                    Config.admob_app_id = snapshot.child("admob_app_id").getValue().toString();
+                }
+                if (snapshot.hasChild("admob_banner_id")) {
+                    Config.admob_banner_id = snapshot.child("admob_banner_id").getValue().toString();
+                }
+                if (snapshot.hasChild("admob_interstitial_ad")) {
+                    Config.admob_interstitial_ad = snapshot.child("admob_interstitial_ad").getValue().toString();
+                }
+                if (snapshot.hasChild("admob_native_ads_id")) {
+                    Config.native_ads_id = snapshot.child("admob_native_ads_id").getValue().toString();
+                }
+                show_ads();
+                Toast.makeText(SplashActivity.this, "ids: "+Config.admob_app_id+"\n"+Config.facebook_interstitial_ad+"\n"+Config.facebook_banner_ad+"\n"+Config.admob_banner_id+"\n"+Config.admob_interstitial_ad+"\n"+Config.native_ads_id, Toast.LENGTH_SHORT).show();
+                Log.d("ads_id", "ids:   "+Config.admob_app_id+"\n"+Config.facebook_interstitial_ad+"\n"+Config.facebook_banner_ad+"\n"+Config.admob_banner_id+"\n"+Config.admob_interstitial_ad+"\n"+Config.native_ads_id);
+            }
 
-        // Banner Ads Code
-        AdView adView = new AdView(this, getString(R.string.facebook_banner_ad), AdSize.BANNER_HEIGHT_50);
-        adContainer.addView(adView);
-        AdSettings.turnOnSDKDebugger(getApplicationContext());
-        AdSettings.setTestMode(true);
-        adView.loadAd();
-        // Complete
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-        // Interstitial Ads Code
-        AdRequest adRequest = new AdRequest.Builder().build();
-        InterstitialAd.load(getApplicationContext(), getString(R.string.admob_interstitial_ad), adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                        mInterstitialAd = interstitialAd;
-                    }
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
-                        Log.d("TAG", loadAdError.toString());
-                        mInterstitialAd = null;
-                    }
-                });
-        // Complete
+            }
+        });
 
     }
 
     public void start(View view) {
-         startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
 //        mInterstitialAd.show(SplashActivity.this);
     }
 
@@ -86,5 +101,37 @@ public class SplashActivity extends AppCompatActivity {
     public void rate_us(View view) {
         RateDialogClass rateDialogClass = new RateDialogClass(SplashActivity.this);
         rateDialogClass.show();
+    }
+    public  void show_ads()
+    {
+        if(Config.facebook_banner_ad != null && Config.admob_interstitial_ad != null) {
+            // Banner Ads Code
+            final RelativeLayout adContainer = findViewById(R.id.banner_container);
+            AdView adView = new AdView(this, Config.facebook_banner_ad, AdSize.BANNER_HEIGHT_50);
+            adContainer.addView(adView);
+            AdSettings.turnOnSDKDebugger(getApplicationContext());
+            AdSettings.setTestMode(true);
+            adView.loadAd();
+            // Complete
+
+            // Interstitial Ads Code
+            AdRequest adRequest = new AdRequest.Builder().build();
+            InterstitialAd.load(getApplicationContext(), Config.admob_interstitial_ad, adRequest,
+                    new InterstitialAdLoadCallback() {
+                        @Override
+                        public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                            mInterstitialAd = interstitialAd;
+                        }
+
+                        @Override
+                        public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                            // Handle the error
+                            Log.d("TAG", loadAdError.toString());
+                            mInterstitialAd = null;
+                        }
+                    });
+            // Complete
+        }
+
     }
 }
