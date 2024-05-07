@@ -72,6 +72,7 @@ public class FavoriteSongsAdapter extends RecyclerView.Adapter<FavoriteSongsAdap
         });
     }
 
+
     @Override
     public int getItemCount() {
         return favoriteSongs.size();

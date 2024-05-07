@@ -410,6 +410,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
 
             }
 
+
             @Override
             public void onInterstitialDismissed(Ad ad) {
                 fb1 = false;

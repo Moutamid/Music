@@ -62,7 +62,6 @@ import java.util.List;
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
-
             if (getItemViewType(position) == CONTENT_TYPE) {
                 SongsModel song = songList.get(position);
                 ((ViewHolder) holder).songNameTextView.setText(song.getName());

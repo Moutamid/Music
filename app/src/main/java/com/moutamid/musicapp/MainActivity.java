@@ -120,6 +120,10 @@ private boolean adLoaded=false;
             } catch (final IOException e) {
                 e.printStackTrace();
             }
+
+
+
+
             String input = null;
             StringBuffer stringBuffer = new StringBuffer();
             while (true) {

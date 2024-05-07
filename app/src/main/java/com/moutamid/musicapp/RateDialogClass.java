@@ -24,6 +24,7 @@ public class RateDialogClass extends Dialog implements
     public TextView later;
     RatingBar simpleRatingBar;
 
+
     ImageView close_btn;
 
     public RateDialogClass(Activity a) {
