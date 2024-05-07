@@ -405,7 +405,6 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         InterstitialAdListener interstitialAdListener = new InterstitialAdListener() {
             private Ad ad;
             private AdError adError;
-
             @Override
             public void onInterstitialDisplayed(Ad ad) {
 

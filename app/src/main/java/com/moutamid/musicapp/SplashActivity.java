@@ -72,6 +72,7 @@ public class SplashActivity extends AppCompatActivity {
                 Log.d("ads_id", "ids:   "+Config.admob_app_id+"\n"+Config.facebook_interstitial_ad+"\n"+Config.facebook_banner_ad+"\n"+Config.admob_banner_id+"\n"+Config.admob_interstitial_ad+"\n"+Config.native_ads_id);
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

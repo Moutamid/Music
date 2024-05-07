@@ -161,7 +161,6 @@ private boolean adLoaded=false;
             }
         }).start();
     }
-
     @Override
     protected void onResume() {
         super.onResume();

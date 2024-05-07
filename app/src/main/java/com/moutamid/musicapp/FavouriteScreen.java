@@ -34,6 +34,7 @@ public class FavouriteScreen extends AppCompatActivity {
         {
             no_songs.setVisibility(View.GONE);
         }
+
         else
         {
             no_songs.setVisibility(View.VISIBLE);

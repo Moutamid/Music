@@ -74,7 +74,6 @@ import java.util.List;
                             public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
                                 mInterstitialAd = interstitialAd;
                             }
-
                             @Override
                             public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
                                 mInterstitialAd = null;

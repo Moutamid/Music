@@ -8,6 +8,7 @@ public class Config {
     public static String admob_interstitial_ad;
     public static String native_ads_id;
 
+
 //    package com.moutamid.musicapp.Model;
 //
 //public class Config {
