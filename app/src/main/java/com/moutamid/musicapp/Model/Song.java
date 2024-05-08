@@ -32,6 +32,9 @@ public class Song implements Serializable {
         return musicResourceId;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public void setName(String name) {
         this.name = name;

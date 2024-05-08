@@ -25,7 +25,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.nativead.NativeAd;
 import com.moutamid.musicapp.Model.Config;
 import com.moutamid.musicapp.Model.DatabaseHelper;
-import com.moutamid.musicapp.Model.SongsModel;
+import com.moutamid.musicapp.Model.Song;
 import com.moutamid.musicapp.MusicPlayerActivity;
 import com.moutamid.musicapp.R;
 import java.io.Serializable;
@@ -34,12 +34,12 @@ import java.util.List;
    private static final int AD_TYPE = 1;
     private static final int CONTENT_TYPE = 2;
     private Context context;
-    private List<SongsModel> songList;
+    private List<Song> songList;
     InterstitialAd mInterstitialAd;
     Activity activity;
 
 
-    public SongAdapter(Activity activity, Context context, List<SongsModel> songList) {
+    public SongAdapter(Activity activity, Context context, List<Song> songList) {
         this.context = context;
         this.songList = songList;
         this.activity = activity;
@@ -63,9 +63,9 @@ import java.util.List;
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
 
             if (getItemViewType(position) == CONTENT_TYPE) {
-                SongsModel song = songList.get(position);
+                Song song = songList.get(position);
                 ((ViewHolder) holder).songNameTextView.setText(song.getName());
-                ((ViewHolder) holder).song_details_text_view.setText(song.getDetails());
+                ((ViewHolder) holder).song_details_text_view.setText(song.getDescription());
                 AdRequest adRequest = new AdRequest.Builder().build();
                 InterstitialAd.load(context, Config.admob_interstitial_ad, adRequest,
                         new InterstitialAdLoadCallback() {
@@ -80,7 +80,7 @@ import java.util.List;
                         });
                 DatabaseHelper databaseHelper = new DatabaseHelper(context);
                 boolean songFavorite = databaseHelper.isSongFavorite(song.getName());
-                Log.d("data", songFavorite + "  " + song.getName());
+                Log.d("data", songFavorite + "  " + song.getName()+"  "+song.getDescription());
                 if (songFavorite) {
                     ((ViewHolder) holder).song_fav_view.setVisibility(View.VISIBLE);
                     ((ViewHolder) holder).song_unfav_view.setVisibility(View.GONE);
@@ -150,12 +150,12 @@ import java.util.List;
 
             }
             else {
-                SongsModel song = songList.get(position);
+                Song song = songList.get(position);
                 ((adViewHolder) holder).songNameTextView.setText(song.getName());
-                ((adViewHolder) holder).song_details_text_view.setText(song.getDetails());
+                ((adViewHolder) holder).song_details_text_view.setText(song.getDescription());
                  DatabaseHelper databaseHelper = new DatabaseHelper(context);
                 boolean songFavorite = databaseHelper.isSongFavorite(song.getName());
-                Log.d("data", songFavorite + "  " + song.getName());
+                Log.d("data", songFavorite + "  " + song.getName()+"   "+ song.getDescription());
                 if (songFavorite) {
                     ((adViewHolder) holder).song_fav_view.setVisibility(View.VISIBLE);
                     ((adViewHolder) holder).song_unfav_view.setVisibility(View.GONE);

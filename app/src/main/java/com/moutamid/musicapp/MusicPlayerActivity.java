@@ -27,7 +27,6 @@ import com.moutamid.musicapp.Model.Config;
 import com.moutamid.musicapp.Model.DatabaseHelper;
 import com.moutamid.musicapp.Model.RepeatMode;
 import com.moutamid.musicapp.Model.Song;
-import com.moutamid.musicapp.Model.SongsModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,8 +41,8 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     ImageView song_image_view;
     private ImageView playButton, nextButton, prevButton, shuffleButton, repeatButton, favButton;
     private MediaPlayer mediaPlayer;
-    private List<SongsModel> songList;
-    private List<SongsModel> originalSongList;
+    private List<Song> songList;
+    private List<Song> originalSongList;
     private int currentPosition = 0;
     private boolean isPlaying = false;
     private boolean isShuffleOn = false;
@@ -185,7 +184,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     }
 
     private void removeToFavorites() {
-        SongsModel currentSong = songList.get(currentPosition);
+        Song currentSong = songList.get(currentPosition);
         databaseHelper.deleteSongFromFavorites(currentSong.getName());
     }
 
@@ -211,12 +210,12 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("songList"))
         {
-        songList = (ArrayList<SongsModel>) intent.getSerializableExtra("songList");
+        songList = (ArrayList<Song>) intent.getSerializableExtra("songList");
         }
         currentPosition = getIntent().getIntExtra("position", 0);
         try {
-            mediaPlayer.setDataSource(songList.get(currentPosition).getUrl());
-            mediaPlayer.prepare();
+ mediaPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/" + songList.get(currentPosition).getMusicResourceId()));
+                       mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -224,7 +223,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
 
         song_name.setText(songList.get(currentPosition).getName());
-        artist_name.setText(songList.get(currentPosition).getDetails());
+        artist_name.setText(songList.get(currentPosition).getDescription());
         playButton.setImageResource(R.drawable.ic_baseline_pause);
 
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
@@ -268,7 +267,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         }
 
         song_name.setText(songList.get(currentPosition).getName());
-        artist_name.setText(songList.get(currentPosition).getDetails());
+        artist_name.setText(songList.get(currentPosition).getDescription());
 //        song_image_view.setImageResource(songList.get(currentPosition).getImageResourceId());
         playButton.setImageResource(R.drawable.ic_baseline_pause);
 
@@ -290,7 +289,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
         }
 
         song_name.setText(songList.get(currentPosition).getName());
-        artist_name.setText(songList.get(currentPosition).getDetails());
+        artist_name.setText(songList.get(currentPosition).getDescription());
 //        song_image_view.setImageResource(songList.get(currentPosition).getImageResourceId());
         playButton.setImageResource(R.drawable.ic_baseline_pause);
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
@@ -300,16 +299,16 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     private void playNextOrPreviousSong() {
         mediaPlayer.reset();
         try {
-            mediaPlayer.setDataSource(songList.get(currentPosition).getUrl());
-            mediaPlayer.prepare();
+ mediaPlayer.setDataSource(this, Uri.parse("android.resource://" + getPackageName() + "/" + songList.get(currentPosition).getMusicResourceId()));
+                       mediaPlayer.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
         mediaPlayer.start();
 
-        SongsModel currentSong = songList.get(currentPosition);
+        Song currentSong = songList.get(currentPosition);
         song_name.setText(currentSong.getName());
-        artist_name.setText(currentSong.getDetails());
+        artist_name.setText(currentSong.getDescription());
 //        song_image_view.setImageResource(currentSong.getImageResourceId());
 
         duration_total.setText(formatted(mediaPlayer.getDuration() / 1000));
@@ -341,7 +340,7 @@ public class MusicPlayerActivity extends AppCompatActivity implements MediaPlaye
     }
 
     private void addToFavorites() {
-        SongsModel currentSong = songList.get(currentPosition);
+        Song currentSong = songList.get(currentPosition);
         databaseHelper.addSongToFavorites(currentSong);
     }
 

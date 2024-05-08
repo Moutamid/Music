@@ -68,7 +68,6 @@ public class SplashActivity extends AppCompatActivity {
                     Config.native_ads_id = snapshot.child("admob_native_ads_id").getValue().toString();
                 }
                 show_ads();
-                Toast.makeText(SplashActivity.this, "ids: "+Config.admob_app_id+"\n"+Config.facebook_interstitial_ad+"\n"+Config.facebook_banner_ad+"\n"+Config.admob_banner_id+"\n"+Config.admob_interstitial_ad+"\n"+Config.native_ads_id, Toast.LENGTH_SHORT).show();
                 Log.d("ads_id", "ids:   "+Config.admob_app_id+"\n"+Config.facebook_interstitial_ad+"\n"+Config.facebook_banner_ad+"\n"+Config.admob_banner_id+"\n"+Config.admob_interstitial_ad+"\n"+Config.native_ads_id);
             }
 

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.moutamid.musicapp.Adapter.FavoriteSongsAdapter;
 import com.moutamid.musicapp.Model.DatabaseHelper;
 import com.moutamid.musicapp.Model.Song;
-import com.moutamid.musicapp.Model.SongsModel;
 
 import java.util.List;
 
@@ -29,14 +28,11 @@ public class FavouriteScreen extends AppCompatActivity {
         no_songs = findViewById(R.id.no_songs);
         favoriteSongsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         DatabaseHelper databaseHelper = new DatabaseHelper(FavouriteScreen.this);
-        List<SongsModel> favoriteSongs = databaseHelper.getAllFavoriteSongs();
+        List<Song> favoriteSongs = databaseHelper.getAllFavoriteSongs();
         if(favoriteSongs.size()>0)
         {
             no_songs.setVisibility(View.GONE);
         }
-
-
-
         else
         {
             no_songs.setVisibility(View.VISIBLE);

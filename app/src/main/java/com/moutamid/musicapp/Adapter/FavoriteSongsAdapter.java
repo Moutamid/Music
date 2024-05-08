@@ -17,7 +17,6 @@ import com.facebook.ads.InterstitialAd;
 import com.facebook.ads.InterstitialAdListener;
 import com.moutamid.musicapp.Model.DatabaseHelper;
 import com.moutamid.musicapp.Model.Song;
-import com.moutamid.musicapp.Model.SongsModel;
 import com.moutamid.musicapp.MusicPlayerActivity;
 import com.moutamid.musicapp.R;
 
@@ -26,18 +25,18 @@ import java.util.List;
 
 public class FavoriteSongsAdapter extends RecyclerView.Adapter<FavoriteSongsAdapter.FavoriteSongViewHolder> {
 
-    private List<SongsModel> favoriteSongs;
+    private List<Song> favoriteSongs;
     Context context;
     InterstitialAd interstitialAdFB;
     boolean fb1 = false;
 
-    public FavoriteSongsAdapter(List<SongsModel> favoriteSongs, Context context) {
+    public FavoriteSongsAdapter(List<Song> favoriteSongs, Context context) {
         this.favoriteSongs = favoriteSongs;
         this.context = context;
     }
 
 
-    public FavoriteSongsAdapter(List<SongsModel> favoriteSongs) {
+    public FavoriteSongsAdapter(List<Song> favoriteSongs) {
         this.favoriteSongs = favoriteSongs;
     }
 
@@ -50,7 +49,7 @@ public class FavoriteSongsAdapter extends RecyclerView.Adapter<FavoriteSongsAdap
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteSongViewHolder holder, int position) {
-        SongsModel song = favoriteSongs.get(position);
+        Song song = favoriteSongs.get(position);
         holder.bind(song);
         loadFbInterstitialAd();
         holder.song_fav_view.setOnClickListener(new View.OnClickListener() {
@@ -91,9 +90,9 @@ public class FavoriteSongsAdapter extends RecyclerView.Adapter<FavoriteSongsAdap
             song_fav_view = itemView.findViewById(R.id.song_fav_view);
         }
 
-        public void bind(SongsModel song) {
+        public void bind(Song song) {
             nameTextView.setText(song.getName());
-            artistTextView.setText(song.getDetails());
+            artistTextView.setText(song.getDescription());
         }
     }
 

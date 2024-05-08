@@ -31,7 +31,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COLUMN_NAME + " TEXT," +
                 COLUMN_ARTIST + " TEXT," +
-                COLUMN_AUDIO + " TEXT)";
+                COLUMN_AUDIO + " INTEGER)";
         db.execSQL(createFavoritesTable);
     }
 
@@ -44,19 +44,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Add song to favorites
-    public void addSongToFavorites(SongsModel song) {
+    public void addSongToFavorites(Song song) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, song.getName());
-        values.put(COLUMN_ARTIST, song.getDetails());
-        values.put(COLUMN_AUDIO, song.getUrl());
+        values.put(COLUMN_ARTIST, song.getDescription());
+        values.put(COLUMN_AUDIO, song.getMusicResourceId());
         db.insert(TABLE_FAVORITES, null, values);
         db.close();
     }
 
     // Retrieve all favorite songs
-    public List<SongsModel> getAllFavoriteSongs() {
-        List<SongsModel> favoriteSongs = new ArrayList<>();
+    public List<Song> getAllFavoriteSongs() {
+        List<Song> favoriteSongs = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT * FROM " + TABLE_FAVORITES;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -64,10 +64,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                SongsModel song = new SongsModel();
+                Song song = new Song();
                 song.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
-                song.setDetails(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST)));
-                song.setUrl(cursor.getString(cursor.getColumnIndex(COLUMN_AUDIO)));
+                song.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_ARTIST)));
+                song.setMusicResourceId(cursor.getInt(cursor.getColumnIndex(COLUMN_AUDIO)));
                 // Adding song to list
                 favoriteSongs.add(song);
             } while (cursor.moveToNext());
