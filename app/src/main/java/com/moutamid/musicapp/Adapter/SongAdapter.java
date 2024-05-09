@@ -67,17 +67,25 @@ import java.util.List;
                 ((ViewHolder) holder).songNameTextView.setText(song.getName());
                 ((ViewHolder) holder).song_details_text_view.setText(song.getDescription());
                 AdRequest adRequest = new AdRequest.Builder().build();
-                InterstitialAd.load(context, Config.admob_interstitial_ad, adRequest,
-                        new InterstitialAdLoadCallback() {
-                            @Override
-                            public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-                                mInterstitialAd = interstitialAd;
-                            }
-                            @Override
-                            public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                                mInterstitialAd = null;
-                            }
-                        });
+                if (Config.facebook_interstitial_ad != null && !Config.facebook_interstitial_ad.isEmpty() &&
+                        Config.facebook_banner_ad != null && !Config.facebook_banner_ad.isEmpty() &&
+                        Config.admob_banner_id != null && !Config.admob_banner_id.isEmpty() &&
+                        Config.admob_interstitial_ad != null && !Config.admob_interstitial_ad.isEmpty() &&
+                        Config.native_ads_id != null && !Config.native_ads_id.isEmpty()) {
+
+                    InterstitialAd.load(context, Config.admob_interstitial_ad, adRequest,
+                            new InterstitialAdLoadCallback() {
+                                @Override
+                                public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                                    mInterstitialAd = interstitialAd;
+                                }
+
+                                @Override
+                                public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                                    mInterstitialAd = null;
+                                }
+                            });
+                }
                 DatabaseHelper databaseHelper = new DatabaseHelper(context);
                 boolean songFavorite = databaseHelper.isSongFavorite(song.getName());
                 Log.d("data", songFavorite + "  " + song.getName()+"  "+song.getDescription());
@@ -108,45 +116,59 @@ import java.util.List;
                     }
                 });
                 holder.itemView.setOnClickListener(view -> {
+                    if (Config.facebook_interstitial_ad != null && !Config.facebook_interstitial_ad.isEmpty() &&
+                            Config.facebook_banner_ad != null && !Config.facebook_banner_ad.isEmpty() &&
+                            Config.admob_banner_id != null && !Config.admob_banner_id.isEmpty() &&
+                            Config.admob_interstitial_ad != null && !Config.admob_interstitial_ad.isEmpty() &&
+                            Config.native_ads_id != null && !Config.native_ads_id.isEmpty()) {
 
-                    if (mInterstitialAd != null) {
-                        mInterstitialAd.show(activity);
-                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                            @Override
-                            public void onAdClicked() {
-                                super.onAdClicked();
-                            }
+                        if (mInterstitialAd != null) {
+                            mInterstitialAd.show(activity);
+                            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                @Override
+                                public void onAdClicked() {
+                                    super.onAdClicked();
+                                }
 
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-                                Intent intent = new Intent(context, MusicPlayerActivity.class);
-                                intent.putExtra("position", position);
-                                intent.putExtra("songList", (Serializable) songList);
-                                context.startActivity(intent);
-                            }
+                                @Override
+                                public void onAdDismissedFullScreenContent() {
+                                    Intent intent = new Intent(context, MusicPlayerActivity.class);
+                                    intent.putExtra("position", position);
+                                    intent.putExtra("songList", (Serializable) songList);
+                                    context.startActivity(intent);
+                                }
 
-                            @Override
-                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                                super.onAdFailedToShowFullScreenContent(adError);
-                            }
+                                @Override
+                                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                    super.onAdFailedToShowFullScreenContent(adError);
+                                }
 
-                            @Override
-                            public void onAdImpression() {
-                                super.onAdImpression();
-                            }
+                                @Override
+                                public void onAdImpression() {
+                                    super.onAdImpression();
+                                }
 
-                            @Override
-                            public void onAdShowedFullScreenContent() {
-                                super.onAdShowedFullScreenContent();
-                            }
-                        });
-                    } else {
+                                @Override
+                                public void onAdShowedFullScreenContent() {
+                                    super.onAdShowedFullScreenContent();
+                                }
+                            });
+                        } else {
+                            Intent intent = new Intent(context, MusicPlayerActivity.class);
+                            intent.putExtra("position", position);
+                            intent.putExtra("songList", (Serializable) songList);
+                            context.startActivity(intent);
+                        }
+                    }
+                    else
+                    {
                         Intent intent = new Intent(context, MusicPlayerActivity.class);
                         intent.putExtra("position", position);
                         intent.putExtra("songList", (Serializable) songList);
                         context.startActivity(intent);
                     }
                 });
+
 
             }
             else {
@@ -183,44 +205,57 @@ import java.util.List;
                     }
                 });
                 holder.itemView.setOnClickListener(view -> {
+                    if (Config.facebook_interstitial_ad != null && !Config.facebook_interstitial_ad.isEmpty() &&
+                            Config.facebook_banner_ad != null && !Config.facebook_banner_ad.isEmpty() &&
+                            Config.admob_banner_id != null && !Config.admob_banner_id.isEmpty() &&
+                            Config.admob_interstitial_ad != null && !Config.admob_interstitial_ad.isEmpty() &&
+                            Config.native_ads_id != null && !Config.native_ads_id.isEmpty()) {
 
-                    if (mInterstitialAd != null) {
-                        mInterstitialAd.show(activity);
-                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
-                            @Override
-                            public void onAdClicked() {
-                                super.onAdClicked();
-                            }
+                        if (mInterstitialAd != null) {
+                            mInterstitialAd.show(activity);
+                            mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                                @Override
+                                public void onAdClicked() {
+                                    super.onAdClicked();
+                                }
 
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-                                Intent intent = new Intent(context, MusicPlayerActivity.class);
-                                intent.putExtra("position", position);
-                                intent.putExtra("songList", (Serializable) songList);
-                                context.startActivity(intent);
-                            }
+                                @Override
+                                public void onAdDismissedFullScreenContent() {
+                                    Intent intent = new Intent(context, MusicPlayerActivity.class);
+                                    intent.putExtra("position", position);
+                                    intent.putExtra("songList", (Serializable) songList);
+                                    context.startActivity(intent);
+                                }
 
-                            @Override
-                            public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
-                                super.onAdFailedToShowFullScreenContent(adError);
-                            }
+                                @Override
+                                public void onAdFailedToShowFullScreenContent(@NonNull AdError adError) {
+                                    super.onAdFailedToShowFullScreenContent(adError);
+                                }
 
-                            @Override
-                            public void onAdImpression() {
-                                super.onAdImpression();
-                            }
+                                @Override
+                                public void onAdImpression() {
+                                    super.onAdImpression();
+                                }
 
-                            @Override
-                            public void onAdShowedFullScreenContent() {
-                                super.onAdShowedFullScreenContent();
-                            }
-                        });
-                    } else {
+                                @Override
+                                public void onAdShowedFullScreenContent() {
+                                    super.onAdShowedFullScreenContent();
+                                }
+                            });
+                        } else {
+                            Intent intent = new Intent(context, MusicPlayerActivity.class);
+                            intent.putExtra("position", position);
+                            intent.putExtra("songList", (Serializable) songList);
+                            context.startActivity(intent);
+                        }
+                    }
+                    else {
                         Intent intent = new Intent(context, MusicPlayerActivity.class);
                         intent.putExtra("position", position);
                         intent.putExtra("songList", (Serializable) songList);
                         context.startActivity(intent);
                     }
+
                 });
                 MobileAds.initialize(context);
                 AdLoader adLoader = new AdLoader.Builder(context, Config.native_ads_id)

@@ -55,9 +55,7 @@ public class SplashActivity extends AppCompatActivity {
                 if (snapshot.hasChild("facebook_banner_ad")) {
                     Config.facebook_banner_ad = snapshot.child("facebook_banner_ad").getValue().toString();
                 }
-                if (snapshot.hasChild("admob_app_id")) {
-                    Config.admob_app_id = snapshot.child("admob_app_id").getValue().toString();
-                }
+
                 if (snapshot.hasChild("admob_banner_id")) {
                     Config.admob_banner_id = snapshot.child("admob_banner_id").getValue().toString();
                 }
@@ -67,10 +65,14 @@ public class SplashActivity extends AppCompatActivity {
                 if (snapshot.hasChild("admob_native_ads_id")) {
                     Config.native_ads_id = snapshot.child("admob_native_ads_id").getValue().toString();
                 }
-                show_ads();
-                Log.d("ads_id", "ids:   "+Config.admob_app_id+"\n"+Config.facebook_interstitial_ad+"\n"+Config.facebook_banner_ad+"\n"+Config.admob_banner_id+"\n"+Config.admob_interstitial_ad+"\n"+Config.native_ads_id);
-            }
-
+                if (Config.facebook_interstitial_ad != null && !Config.facebook_interstitial_ad.isEmpty() &&
+                        Config.facebook_banner_ad != null && !Config.facebook_banner_ad.isEmpty() &&
+                        Config.admob_banner_id != null && !Config.admob_banner_id.isEmpty() &&
+                        Config.admob_interstitial_ad != null && !Config.admob_interstitial_ad.isEmpty() &&
+                        Config.native_ads_id != null && !Config.native_ads_id.isEmpty()) {
+                    show_ads();
+                }
+         }
 
 
             @Override
@@ -103,9 +105,9 @@ public class SplashActivity extends AppCompatActivity {
         RateDialogClass rateDialogClass = new RateDialogClass(SplashActivity.this);
         rateDialogClass.show();
     }
-    public  void show_ads()
-    {
-        if(Config.facebook_banner_ad != null && Config.admob_interstitial_ad != null) {
+
+    public void show_ads() {
+        if (Config.facebook_banner_ad != null && Config.admob_interstitial_ad != null) {
             // Banner Ads Code
             final RelativeLayout adContainer = findViewById(R.id.banner_container);
             AdView adView = new AdView(this, Config.facebook_banner_ad, AdSize.BANNER_HEIGHT_50);
